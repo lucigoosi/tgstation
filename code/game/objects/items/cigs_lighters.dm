@@ -244,16 +244,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
-		e.start(src)
-		qdel(src)
+		reagent_explosion.on_reaction(src, round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1))
 		return
 	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
-		e.start(src)
-		qdel(src)
+		reagent_explosion.on_reaction(src, round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1))
 		return
 	// allowing reagents to react after being lit
 	reagents.flags &= ~(NO_REACT)
